@@ -27,7 +27,16 @@ class App extends React.Component {
     
   }
   findTerm(term) {
-    var regTerm = new RegExp(term);
+    var regex1 = new RegExp(term, 'i');
+    console.log(regex1);
+    console.log(regex1.test('asdf'));
+    for (var idx = 0; idx < this.state.movies.length; idx++) {
+      // replace === with RegExp contains 
+      if (regex1.test(this.state.movies[idx].title)) {
+
+        console.log('we match at ' + this.state.movies[idx].title);
+      } 
+    }
 
   }
 
@@ -38,8 +47,7 @@ class App extends React.Component {
       <Search
         handleSubmit = {this.handleSubmit}
         />
-      <MovieList 
-        movies = {this.state.movies} />
+      <MovieList movies = {this.state.movies} />
       </div>
       )
     }
