@@ -13,7 +13,6 @@ class App extends React.Component {
         {title: 'Ex Machina'},
       ],
       searchTerm: '',
-      moviesToRender: [],
 
     }
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,22 +29,16 @@ class App extends React.Component {
   findTerm(term) {
     var regex1 = new RegExp(term, 'i');
     var anyFound = false;
-    var addToMoviesToDisplay = [];
     for (var idx = 0; idx < this.state.movies.length; idx++) {
       // replace === with RegExp contains 
       if ((regex1.test(this.state.movies[idx].title)) && (term !== '')) {
+        console.log('we match at ' + this.state.movies[idx].title);
         anyFound = true;
-        addToMoviesToDisplay.push({title: this.state.movies[idx].title});
-
       }
     }
-    if (anyFound) {
-      // update the moviesToRender state with the array of movies.
-      this.setState( { moviesToRender: addToMoviesToDisplay});
-    } else {
+    if (!anyFound) {
       // make a 'none found' card appear.
       console.log('none found, sucka!');
-      this.setState( { moviesToRender: [{title: 'Sorry, no matches.'}]});
     }
   }
 
@@ -57,7 +50,7 @@ class App extends React.Component {
       <Search
         handleSubmit = {this.handleSubmit}
         />
-      <MovieList movies = {this.state.moviesToRender} />
+      <MovieList movies = {this.state.movies} />
       </div>
       )
     }
