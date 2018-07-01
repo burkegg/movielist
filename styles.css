@@ -22,10 +22,14 @@
   padding-bottom: 20px;
   padding-top: 5px;
   width: 250px;
+  justify-content: center;
 }
 
 .title {
   margin: 15px;
   padding-top: 0px;
   background-color: red;
+}
+.saerch-bar{
+  justify-content: space-between;
 }

@@ -1,31 +1,55 @@
 
 // Make an app object..
-var App = function(props) {
+class App extends React.Component {
 // main app that will have components...including list.
-  var movies = [
-    {title: 'Mean Girls'},
-    {title: 'Hackers'},
-    {title: 'The Grey'},
-    {title: 'Sunshine'},
-    {title: 'Ex Machina'},
-  ]; 
+  constructor(props) {
+    super(props),
+    this.state = {
+      movies: [
+        {title: 'Mean Girls'},
+        {title: 'Hackers'},
+        {title: 'The Grey'},
+        {title: 'Sunshine'},
+        {title: 'Ex Machina'},
+      ],
+      searchTerm: '',
 
-  var getSearchResults = function(input) {
-    console.log(input);
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  return (
-    <div className = "shebang">
-    <h1 className = "title">Movie List</h1>
-    <SearchBar getSearchResults = {getSearchResults}/>
-    <MovieList movies = {movies} />
-    </div>
-    )
-}
+
+
+  handleSubmit(e) {
+    console.log('in handleSubmit');
+    console.log(e);
+    this.findTerm(e);
+    
+  }
+  findTerm(term) {
+    var regTerm = new RegExp(term);
+
+  }
+
+  render() {
+    return (
+      <div className = "shebang">
+      <h1 className = "title">Movie List</h1>
+      <Search
+        handleSubmit = {this.handleSubmit}
+        />
+      <MovieList 
+        movies = {this.state.movies} />
+      </div>
+      )
+    }
+};
+
+
+
 
 var MovieList = function(props) {
   // will be a component inside App.
-  console.log(props.movies[0])
   return(
     <div className = "playList">
 
@@ -36,6 +60,8 @@ var MovieList = function(props) {
 
 }
 
+
+
 var MovieCard = function(props) {
 // display info from each movie.
   return (
@@ -43,20 +69,36 @@ var MovieCard = function(props) {
     )
 }
 
-var SearchBar = function(props) {
-  return (
-  <form>
-    <label>
-      Search:
-      <input type ="text" searchText = "searchText" />
-      </label>
+
+
+var Search = (props) => {
+  return(
+    <div className = "search-bar">
       <input 
-      type = "submit" 
-      value="Submit" 
-      getSearchResults()/>
-  </form>
-  )
+      className="form" 
+      type="text" 
+      />
+      <button className ="btn hidden-sm-down"
+      onClick = {() => { props.handleSubmit(($('.form').val())); }}>
+      Search</button>
+    </div>
+    )
 }
+
+
+
+
+// onClick is wrapped in a function so that it doesn't fire immediately.
+
+
+
+
+
+
+
+
+
+
 
 ReactDOM.render(<App />, document.getElementById('app'));
 window.App = App;
